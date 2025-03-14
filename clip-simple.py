@@ -15,7 +15,7 @@ model, preprocess = clip.load("ViT-B/32", device=device)
 print("Model loaded")
 
 # Load prompts data
-prompts_file = "3k_prompts.csv"
+prompts_file = "Hallucination/3k_prompts.csv"
 df = pd.read_csv(prompts_file)
 print(f"Loaded {len(df)} prompt-image pairs")
 
@@ -75,7 +75,7 @@ for idx, row in tqdm(df.iterrows(), total=len(df), desc="Processing images"):
 results_df = pd.DataFrame(results)
 
 # Save results
-results_df.to_csv("clip_similarity_results.csv", index=False)
+results_df.to_csv("Hallucination/clip_similarity_results.csv", index=False)
 
 # Analyze results
 print("\nAnalysis of similarity scores:")
