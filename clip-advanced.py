@@ -25,7 +25,7 @@ model, preprocess = clip.load("ViT-B/32", device=device)
 print("Model loaded")
 
 # Load prompts data
-prompts_file = "3k_prompts.csv"
+prompts_file = "Hallucination/3k_prompts.csv"
 df = pd.read_csv(prompts_file)
 print(f"Loaded {len(df)} prompt-image pairs")
 

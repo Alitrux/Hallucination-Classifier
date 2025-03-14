@@ -36,7 +36,7 @@ results = []
 # Process each image-prompt pair
 for idx, row in tqdm(df.iterrows(), total=len(df), desc="Processing images"):
     image_name = row[IMAGE_COL]
-    prompt = row[PROMPT_COL]
+    prompt = row[PROMPT_COL] + " There must be no inconsistencies in the image"
     
     # Construct the full image path
     image_path = os.path.join(image_dir, image_name)
