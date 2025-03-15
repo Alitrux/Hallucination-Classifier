@@ -21,14 +21,6 @@ except Exception as e:
 # Extract similarity scores
 similarity_scores = df['similarity_score'].values
 
-# 1. Histogram with KDE (Kernel Density Estimation)
-plt.figure(figsize=(12, 6))
-plt.subplot(2, 2, 1)
-sns.histplot(similarity_scores, kde=True, bins=30)
-plt.title('Histogram of CLIP Similarity Scores')
-plt.xlabel('Similarity Score')
-plt.ylabel('Frequency')
-
 # 2. Box plot for outlier visualization
 plt.subplot(2, 2, 2)
 sns.boxplot(y=similarity_scores)
@@ -41,46 +33,7 @@ sns.stripplot(y=similarity_scores, jitter=True, alpha=0.4)
 plt.title('Strip Plot of Individual Scores')
 plt.ylabel('Similarity Score')
 
-# 4. Attempt to identify clusters with KMeans
-# Determine optimal number of clusters using silhouette score
-max_clusters = min(10, len(similarity_scores) - 1)  # Cap at 10 clusters
-if max_clusters > 1:
-    from sklearn.metrics import silhouette_score
-    
-    # Reshape for sklearn
-    X = similarity_scores.reshape(-1, 1)
-    
-    silhouette_scores = []
-    for k in range(2, max_clusters + 1):
-        kmeans = KMeans(n_clusters=k, random_state=42)
-        cluster_labels = kmeans.fit_predict(X)
-        silhouette_avg = silhouette_score(X, cluster_labels)
-        silhouette_scores.append(silhouette_avg)
-    
-    # Find optimal number of clusters
-    optimal_clusters = silhouette_scores.index(max(silhouette_scores)) + 2  # +2 because we started from 2
-    
-    # Apply KMeans with optimal clusters
-    kmeans = KMeans(n_clusters=optimal_clusters, random_state=42)
-    df['cluster'] = kmeans.fit_predict(X)
-    
-    # Plot clusters
-    plt.subplot(2, 2, 4)
-    for cluster in range(optimal_clusters):
-        cluster_data = df[df['cluster'] == cluster]['similarity_score']
-        sns.kdeplot(cluster_data, label=f'Cluster {cluster}')
-    
-    plt.title(f'KDE of {optimal_clusters} Identified Clusters')
-    plt.xlabel('Similarity Score')
-    plt.legend()
-else:
-    plt.subplot(2, 2, 4)
-    plt.text(0.5, 0.5, 'Not enough data\nfor clustering', 
-             horizontalalignment='center', verticalalignment='center')
-    plt.axis('off')
 
-plt.tight_layout()
-plt.savefig('similarity_distribution_no_hallucination.png')
 
 # Create a separate figure for a more detailed 1D scatter plot
 plt.figure(figsize=(14, 4))

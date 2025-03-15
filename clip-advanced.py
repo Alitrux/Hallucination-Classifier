@@ -12,6 +12,9 @@ from nltk.chunk import ne_chunk
 
 # Download necessary NLTK data
 nltk.download('punkt')
+nltk.download("punkt_tab")
+nltk.download('averaged_perceptron_tagger_eng')
+nltk.download('maxent_ne_chunker_tab')
 nltk.download('averaged_perceptron_tagger')
 nltk.download('maxent_ne_chunker')
 nltk.download('words')

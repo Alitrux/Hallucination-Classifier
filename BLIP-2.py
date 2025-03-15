@@ -10,9 +10,9 @@ import numpy as np
 import json
 import re
 
-# Download NLTK data for sentence tokenization
-nltk.download('punkt')
 
+nltk.download('punkt')
+nltk.download('punkt_tab')
 # Set device
 device = "cuda" if torch.cuda.is_available() else "cpu"
 print(f"Using device: {device}")
@@ -25,7 +25,7 @@ model.to(device)
 print(f"Loaded BLIP-2 model: {model_name}")
 
 # Load prompts data
-prompts_file = "3k_prompts.csv"
+prompts_file = "Hallucination/3k_prompts.csv"
 df = pd.read_csv(prompts_file)
 print(f"Loaded {len(df)} prompt-image pairs")
 
